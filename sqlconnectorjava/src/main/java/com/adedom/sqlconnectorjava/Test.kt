@@ -2,5 +2,5 @@ package com.adedom.sqlconnectorjava
 
 class Test {
 
-    val hello = "Hello library"
+    val hello = "Hello library new"
 }
