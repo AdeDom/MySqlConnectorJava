@@ -3,8 +3,8 @@ package com.adedom.mysqlconnectorjava
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.adedom.mysqlconnectorjava.utility.MyConnect
-import com.adedom.mysqlconnectorjava.utility.MyExecuteUpdate
+import com.adedom.sqlconnectorjava.Dru
+import com.adedom.sqlconnectorjava.ExecuteUpdate
 import kotlinx.android.synthetic.main.activity_insert.*
 
 class InsertActivity : AppCompatActivity() {
@@ -17,15 +17,14 @@ class InsertActivity : AppCompatActivity() {
 
     private fun setEvents() {
         mBtnInsert.setOnClickListener {
-            val data = listOf<Any>(
-                mEdtName.text.toString().trim(),
-                mEdtPrice.text.toString().trim(),
-                mEdtType.text.toString().trim()
-            )
-            MyConnect.executeStoredProcedure("sp_insert_product", data, MyExecuteUpdate {
-                mEdtName.setText("")
-                mEdtPrice.setText("")
-                mEdtType.setText("")
+            val sql = "INSERT INTO tbl_product(name, price, type) " +
+                    "VALUES ('${mEdtName.text.toString().trim()}'," +
+                    "'${mEdtPrice.text.toString().trim()}'," +
+                    "'${mEdtType.text.toString().trim()}')"
+            Dru.execute(MainActivity().conn, sql, ExecuteUpdate {
+                mEdtName.text.clear()
+                mEdtPrice.text.clear()
+                mEdtType.text.clear()
                 Toast.makeText(baseContext, "Insert success", Toast.LENGTH_SHORT).show()
             })
         }

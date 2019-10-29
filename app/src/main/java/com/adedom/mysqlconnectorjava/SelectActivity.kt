@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.adedom.mysqlconnectorjava.model.ProductItem
-import com.adedom.mysqlconnectorjava.utility.MyConnect
-import com.adedom.mysqlconnectorjava.utility.MyExecuteQuery
+import com.adedom.sqlconnectorjava.Dru
+import com.adedom.sqlconnectorjava.ExecuteQuery
 import kotlinx.android.synthetic.main.activity_select.*
 import java.util.*
 
@@ -21,6 +21,7 @@ class SelectActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select)
+
         init()
         feedProduct()
     }
@@ -28,26 +29,30 @@ class SelectActivity : AppCompatActivity() {
     private fun init() {
         mProductItem = arrayListOf<ProductItem>()
         mRecyclerView.layoutManager = LinearLayoutManager(baseContext)
+        mRecyclerView.adapter = CustomAdapter()
     }
 
     private fun feedProduct() {
-        MyConnect.executeStoredProcedure("sp_select_product", emptyList(), MyExecuteQuery { rs ->
-            while (rs.next()) {
+        val sql = "SELECT name FROM tbl_product"
+        Dru.execute(MainActivity().conn, sql, ExecuteQuery {
+            while (it.next()) {
                 val item = ProductItem(
-                    rs.getString(1),
-                    rs.getString(2),
-                    rs.getInt(3),
-                    rs.getString(4)
+                    name = it.getString(1)
                 )
                 mProductItem.add(item)
             }
-            mRecyclerView.adapter = CustomAdapter()
+            mRecyclerView.adapter!!.notifyDataSetChanged()
         })
     }
 
-    inner class CustomAdapter : RecyclerView.Adapter<CustomHolder>() {
+    inner class CustomAdapter : RecyclerView.Adapter<CustomAdapter.CustomHolder>() {
+        inner class CustomHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            val mTvName = itemView.findViewById(android.R.id.text1) as TextView
+        }
+
         override fun onCreateViewHolder(viewGroup: ViewGroup, p1: Int): CustomHolder {
-            val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_product, viewGroup, false)
+            val view = LayoutInflater.from(viewGroup.context)
+                .inflate(android.R.layout.simple_list_item_1, viewGroup, false)
             return CustomHolder(view)
         }
 
@@ -57,17 +62,7 @@ class SelectActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: CustomHolder, position: Int) {
             val item = mProductItem[position]
-            holder.mTvId.text = item.id
             holder.mTvName.text = item.name
-            holder.mTvPrice.text = item.price.toString()
-            holder.mTvType.text = item.type
         }
-    }
-
-    inner class CustomHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val mTvId = itemView.findViewById(R.id.mTvId) as TextView
-        val mTvName = itemView.findViewById(R.id.mTvName) as TextView
-        val mTvPrice = itemView.findViewById(R.id.mTvPrice) as TextView
-        val mTvType = itemView.findViewById(R.id.mTvType) as TextView
     }
 }

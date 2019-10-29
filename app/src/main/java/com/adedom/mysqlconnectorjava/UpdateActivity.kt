@@ -3,8 +3,8 @@ package com.adedom.mysqlconnectorjava
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.adedom.mysqlconnectorjava.utility.MyConnect
-import com.adedom.mysqlconnectorjava.utility.MyExecuteUpdate
+import com.adedom.sqlconnectorjava.Dru
+import com.adedom.sqlconnectorjava.ExecuteUpdate
 import kotlinx.android.synthetic.main.activity_update.*
 
 class UpdateActivity : AppCompatActivity() {
@@ -17,13 +17,13 @@ class UpdateActivity : AppCompatActivity() {
 
     private fun setEvents() {
         mBtnUpdate.setOnClickListener {
-            val data = listOf<Any>(
+            val args = arrayOf(
                 mEdtId.text.toString().trim(),
                 mEdtName.text.toString().trim(),
                 mEdtPrice.text.toString().trim(),
                 mEdtType.text.toString().trim()
             )
-            MyConnect.executeStoredProcedure("sp_update_product", data, MyExecuteUpdate {
+            Dru.call(MainActivity().conn, "sp_update_product", *args, update = ExecuteUpdate {
                 mEdtId.setText("")
                 mEdtName.setText("")
                 mEdtPrice.setText("")
