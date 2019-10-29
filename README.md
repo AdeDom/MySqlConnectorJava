@@ -13,6 +13,13 @@ dependencies {
 
 
 
+CONNECTION
+    val conn = Dru.connection(
+        "192.168.43.22",
+        "my_connect_jdbc",
+        "root",
+        "abc456"
+    )
 
 SELECT
       val sql = "SELECT name FROM tbl_product"
