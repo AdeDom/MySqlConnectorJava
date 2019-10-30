@@ -1,4 +1,4 @@
-package com.adedom.sqlconnectorjava;
+package com.adedom.library;
 
 public interface ExecuteUpdate {
     void onComplete();

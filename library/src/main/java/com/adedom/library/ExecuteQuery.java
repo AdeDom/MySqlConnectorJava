@@ -1,4 +1,4 @@
-package com.adedom.sqlconnectorjava;
+package com.adedom.library;
 
 import java.sql.ResultSet;
 

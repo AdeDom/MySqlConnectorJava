@@ -3,8 +3,7 @@ package com.adedom.mysqlconnectorjava
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.adedom.sqlconnectorjava.Dru
-import com.adedom.sqlconnectorjava.ExecuteUpdate
+import com.adedom.library.Dru
 import kotlinx.android.synthetic.main.activity_insert.*
 
 class InsertActivity : AppCompatActivity() {
@@ -21,12 +20,14 @@ class InsertActivity : AppCompatActivity() {
                     "VALUES ('${mEdtName.text.toString().trim()}'," +
                     "'${mEdtPrice.text.toString().trim()}'," +
                     "'${mEdtType.text.toString().trim()}')"
-            Dru.execute(MainActivity().conn, sql, ExecuteUpdate {
-                mEdtName.text.clear()
-                mEdtPrice.text.clear()
-                mEdtType.text.clear()
-                Toast.makeText(baseContext, "Insert success", Toast.LENGTH_SHORT).show()
-            })
+            Dru.connection(MainActivity().conn)
+                .execute(sql)
+                .setCallBack {
+                    mEdtName.text.clear()
+                    mEdtPrice.text.clear()
+                    mEdtType.text.clear()
+                    Toast.makeText(baseContext, "Insert success", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 }

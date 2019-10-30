@@ -3,8 +3,7 @@ package com.adedom.mysqlconnectorjava
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.adedom.sqlconnectorjava.Dru
-import com.adedom.sqlconnectorjava.ExecuteUpdate
+import com.adedom.library.Dru
 import kotlinx.android.synthetic.main.activity_update.*
 
 class UpdateActivity : AppCompatActivity() {
@@ -17,19 +16,20 @@ class UpdateActivity : AppCompatActivity() {
 
     private fun setEvents() {
         mBtnUpdate.setOnClickListener {
-            val args = arrayOf(
-                mEdtId.text.toString().trim(),
-                mEdtName.text.toString().trim(),
-                mEdtPrice.text.toString().trim(),
-                mEdtType.text.toString().trim()
-            )
-            Dru.call(MainActivity().conn, "sp_update_product", *args, update = ExecuteUpdate {
-                mEdtId.setText("")
-                mEdtName.setText("")
-                mEdtPrice.setText("")
-                mEdtType.setText("")
-                Toast.makeText(baseContext, "Update success", Toast.LENGTH_SHORT).show()
-            })
+            Dru.connection(MainActivity().conn)
+                .call("sp_update_product")
+                .parameter(mEdtId.text.toString().trim())
+                .parameter(mEdtName.text.toString().trim())
+                .parameter(mEdtPrice.text.toString().trim())
+                .parameter(mEdtType.text.toString().trim())
+                .commit()
+                .setCallBack {
+                    mEdtId.setText("")
+                    mEdtName.setText("")
+                    mEdtPrice.setText("")
+                    mEdtType.setText("")
+                    Toast.makeText(baseContext, "Update success", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 }

@@ -8,9 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.adedom.library.Dru
 import com.adedom.mysqlconnectorjava.model.ProductItem
-import com.adedom.sqlconnectorjava.Dru
-import com.adedom.sqlconnectorjava.ExecuteQuery
 import kotlinx.android.synthetic.main.activity_select.*
 import java.util.*
 
@@ -34,15 +33,16 @@ class SelectActivity : AppCompatActivity() {
 
     private fun feedProduct() {
         val sql = "SELECT name FROM tbl_product"
-        Dru.execute(MainActivity().conn, sql, ExecuteQuery {
-            while (it.next()) {
-                val item = ProductItem(
-                    name = it.getString(1)
-                )
-                mProductItem.add(item)
+        Dru.connection(MainActivity().conn)
+            .execute(sql) {
+                while (it.next()) {
+                    val item = ProductItem(
+                        name = it.getString(1)
+                    )
+                    mProductItem.add(item)
+                }
+                mRecyclerView.adapter!!.notifyDataSetChanged()
             }
-            mRecyclerView.adapter!!.notifyDataSetChanged()
-        })
     }
 
     inner class CustomAdapter : RecyclerView.Adapter<CustomAdapter.CustomHolder>() {

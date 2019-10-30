@@ -1,1 +1,1 @@
-include ':app', ':sqlconnectorjava'
+include ':app', ':library'

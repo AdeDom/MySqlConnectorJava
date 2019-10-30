@@ -3,8 +3,7 @@ package com.adedom.mysqlconnectorjava
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.adedom.sqlconnectorjava.Dru
-import com.adedom.sqlconnectorjava.ExecuteUpdate
+import com.adedom.library.Dru
 import kotlinx.android.synthetic.main.activity_delete.*
 
 class DeleteActivity : AppCompatActivity() {
@@ -17,11 +16,14 @@ class DeleteActivity : AppCompatActivity() {
 
     private fun setEvents() {
         mBtnDelete.setOnClickListener {
-            val args = arrayOf(mEdtId.text.toString().trim())
-            Dru.call(MainActivity().conn, "sp_delete_product", ExecuteUpdate {
-                mEdtId.setText("")
-                Toast.makeText(baseContext, "Delete success", Toast.LENGTH_SHORT).show()
-            }, *args)
+            Dru.connection(MainActivity().conn)
+                .call("sp_delete_product")
+                .parameter(mEdtId.text.toString().trim())
+                .commit()
+                .setCallBack {
+                    mEdtId.setText("")
+                    Toast.makeText(baseContext, "Delete success", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 }
