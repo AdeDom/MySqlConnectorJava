@@ -1,27 +1,26 @@
 package com.adedom.library;
 
-/*
-    Pathiphon Jaiyen
-    6042470006
-    30/10/19
-*/
-
+import android.content.Context;
 import android.os.StrictMode;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
-public class Dru implements SetCallBack {
+/*
+    Pathiphon Jaiyen
+    6042470006
+    31/10/19
+*/
 
-    private static Connection connection;
+public class Dru {
 
-    private static ArrayList<String> values;
-
-    private static String sql;
+    public Dru() {
+    }
 
     public static Connection connection(String ip, String dbName, String username, String password) {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
@@ -38,90 +37,24 @@ public class Dru implements SetCallBack {
         return null;
     }
 
-    public static Dru connection(Connection connection) {
-        Dru.connection = connection;
-        return new Dru();
+    public static Execute connection(Connection connection) {
+        return new Execute(connection);
     }
 
-    public Dru execute(String sql) {
-        Statement statement = null;
-
-        try {
-            statement = connection.createStatement();
-            int result = statement.executeUpdate(sql);
-            if (result == 1) {
-                new Dru();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                assert statement != null;
-                statement.close();
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return new Dru();
+    public static Call with(Connection connection) {
+        return new Call(connection);
     }
 
-    public void execute(String sql, ExecuteQuery query) {
-        query(sql, query);
+    public static void completed(Context context) {
+        Toast.makeText(context, R.string.completed, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void setCallBack(ExecuteUpdate update) {
-        update.onComplete();
+    public static void failed(Context context) {
+        Toast.makeText(context, R.string.failed, Toast.LENGTH_LONG).show();
     }
 
-    public Dru call(String storedProcedureName) {
-        values = new ArrayList<>();
-        sql = "CALL " + storedProcedureName + "(";
-        return new Dru();
-    }
-
-    public Dru parameter(String values) {
-        Dru.values.add("'" + values + "'");
-        return new Dru();
-    }
-
-    public Dru commit() {
-        spFormat();
-        execute(sql);
-        return new Dru();
-    }
-
-    public void commit(ExecuteQuery query) {
-        spFormat();
-        query(sql, query);
-    }
-
-    private void query(String sql, ExecuteQuery query) {
-        Statement statement = null;
-        ResultSet rs = null;
-
-        try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery(sql);
-            query.onComplete(rs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                assert rs != null;
-                rs.close();
-                statement.close();
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void spFormat() {
-        for (String s : values) sql += s + ",";
-        if (!values.isEmpty()) sql = sql.substring(0, sql.length() - 1);
-        sql += ")";
+    public static void recyclerView(Context context, RecyclerView recyclerView, ArrayList<DataItem> items) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(new MyAdapter(items));
     }
 }

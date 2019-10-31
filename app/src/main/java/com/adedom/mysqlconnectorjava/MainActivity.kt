@@ -3,7 +3,6 @@ package com.adedom.mysqlconnectorjava
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.adedom.library.Dru
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -20,50 +19,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        checkConnect()
-        setEvents()
-    }
-
-    private fun checkConnect() {
         if (conn == null) {
-            Toast.makeText(baseContext, "Connect Failed", Toast.LENGTH_LONG).show()
+            Dru.failed(baseContext)
         } else {
-            Toast.makeText(baseContext, "Connect Ok", Toast.LENGTH_SHORT).show()
+            Dru.completed(baseContext)
         }
+        setEvents()
     }
 
     private fun setEvents() {
         mBtnSelect.setOnClickListener {
-            startActivity(
-                Intent(
-                    baseContext,
-                    SelectActivity::class.java
-                )
-            )
+            startActivity(Intent(baseContext, SelectActivity::class.java))
         }
         mBtnInsert.setOnClickListener {
-            startActivity(
-                Intent(
-                    baseContext,
-                    InsertActivity::class.java
-                )
-            )
+            startActivity(Intent(baseContext, InsertActivity::class.java))
         }
         mBtnUpdate.setOnClickListener {
-            startActivity(
-                Intent(
-                    baseContext,
-                    UpdateActivity::class.java
-                )
-            )
+            startActivity(Intent(baseContext, UpdateActivity::class.java))
         }
         mBtnDelete.setOnClickListener {
-            startActivity(
-                Intent(
-                    baseContext,
-                    DeleteActivity::class.java
-                )
-            )
+            startActivity(Intent(baseContext, DeleteActivity::class.java))
         }
     }
 }

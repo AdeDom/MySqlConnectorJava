@@ -32,12 +32,12 @@ class SelectActivity : AppCompatActivity() {
     }
 
     private fun feedProduct() {
-        val sql = "SELECT name FROM tbl_product"
-        Dru.connection(MainActivity().conn)
-            .execute(sql) {
-                while (it.next()) {
+        Dru.with(MainActivity().conn)
+            .call("sp_select_product")
+            .commit { rs ->
+                while (rs.next()) {
                     val item = ProductItem(
-                        name = it.getString(1)
+                        name = rs.getString(2)
                     )
                     mProductItem.add(item)
                 }
