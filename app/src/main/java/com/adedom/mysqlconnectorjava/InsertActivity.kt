@@ -16,6 +16,12 @@ class InsertActivity : AppCompatActivity() {
 
     private fun setEvents() {
         mBtnInsert.setOnClickListener {
+            when {
+                Dru.isEmpty(mEdtName, "abc") -> return@setOnClickListener
+                Dru.isEmpty(mEdtPrice, "456") -> return@setOnClickListener
+                Dru.isEmpty(mEdtType, "123") -> return@setOnClickListener
+            }
+
             Dru.with(MainActivity().conn)
                 .call("sp_insert_product")
                 .parameter(mEdtName.text.toString().trim())

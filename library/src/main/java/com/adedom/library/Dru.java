@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.StrictMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.sql.Connection;
@@ -53,8 +54,22 @@ public class Dru {
         Toast.makeText(context, R.string.failed, Toast.LENGTH_LONG).show();
     }
 
+    public static Boolean isEmpty(EditText editText, String error) {
+        if (editText.getText().toString().trim().isEmpty()) {
+            editText.requestFocus();
+            editText.setError(error);
+            return true;
+        }
+        return false;
+    }
+
     public static void recyclerView(Context context, RecyclerView recyclerView, ArrayList<DataItem> items) {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(new MyAdapter(items));
+    }
+
+    public static void recyclerView(Context context, RecyclerView recyclerView, RecyclerView.Adapter adapter) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
     }
 }

@@ -13,6 +13,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
     private ArrayList<DataItem> dataItem;
 
+    public MyAdapter() {
+    }
+
     public MyAdapter(ArrayList<DataItem> items) {
         dataItem = new ArrayList<>();
         dataItem = items;
@@ -26,6 +29,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             super(itemView);
             mTvTitle = (TextView) itemView.findViewById(android.R.id.text1);
         }
+    }
+
+    public void refresh(ArrayList<DataItem> items) {
+        dataItem = items;
+        notifyDataSetChanged();
     }
 
     @NonNull
