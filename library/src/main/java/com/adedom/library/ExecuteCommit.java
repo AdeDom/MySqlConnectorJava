@@ -11,7 +11,10 @@ public class ExecuteCommit {
 
     private static String sql;
 
-    ExecuteCommit(Connection connection, String sql) {
+    public ExecuteCommit() {
+    }
+
+    public ExecuteCommit(Connection connection, String sql) {
         ExecuteCommit.connection = connection;
         ExecuteCommit.sql = sql;
     }
@@ -59,18 +62,18 @@ public class ExecuteCommit {
 
     public void commit(ExecuteQuery query) {
         Statement statement = null;
-        ResultSet rs = null;
+        ResultSet resultSet = null;
 
         try {
             statement = connection.createStatement();
-            rs = statement.executeQuery(sql);
-            query.onComplete(rs);
+            resultSet = statement.executeQuery(sql);
+            query.onComplete(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                assert rs != null;
-                rs.close();
+                assert resultSet != null;
+                resultSet.close();
                 statement.close();
                 connection.close();
             } catch (SQLException e) {

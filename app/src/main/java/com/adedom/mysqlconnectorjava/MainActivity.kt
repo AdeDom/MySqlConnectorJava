@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             Dru.completed(baseContext)
         }
+
         setEvents()
     }
 

@@ -1,36 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".InsertActivity">
+        xmlns:tools="http://schemas.android.com/tools"
+        style="@style/LinearLayout"
+        tools:context=".InsertActivity">
 
     <EditText
-        android:id="@+id/mEdtName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="name" />
+            android:id="@+id/mEdtName"
+            style="@style/MatchWrap"
+            android:hint="@string/name" />
 
     <EditText
-        android:id="@+id/mEdtPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="price"
-        android:inputType="number" />
+            android:id="@+id/mEdtPrice"
+            style="@style/EditTextNumber"
+            android:hint="@string/price" />
 
     <EditText
-        android:id="@+id/mEdtType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="type"
-        android:inputType="number" />
+            android:id="@+id/mEdtType"
+            style="@style/EditTextNumber"
+            android:hint="@string/type" />
 
     <Button
-        android:id="@+id/mBtnInsert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Insert" />
+            android:id="@+id/mBtnInsert"
+            style="@style/Button"
+            android:text="@string/insert" />
 
 </LinearLayout>

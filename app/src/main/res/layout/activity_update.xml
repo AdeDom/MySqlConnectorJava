@@ -1,43 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        style="@style/LinearLayout"
         tools:context=".UpdateActivity">
 
     <EditText
             android:id="@+id/mEdtId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="id"
-            android:inputType="number" />
+            style="@style/EditTextNumber"
+            android:hint="@string/id" />
 
     <EditText
             android:id="@+id/mEdtName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="name" />
+            style="@style/MatchWrap"
+            android:hint="@string/name" />
 
     <EditText
             android:id="@+id/mEdtPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="price"
-            android:inputType="number" />
+            style="@style/EditTextNumber"
+            android:hint="@string/price" />
 
     <EditText
             android:id="@+id/mEdtType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="type"
-            android:inputType="number" />
+            style="@style/EditTextNumber"
+            android:hint="@string/type" />
 
     <Button
             android:id="@+id/mBtnUpdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="update" />
+            style="@style/Button"
+            android:text="@string/update" />
 
 </LinearLayout>

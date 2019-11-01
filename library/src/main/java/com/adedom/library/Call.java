@@ -6,7 +6,10 @@ public class Call {
 
     private static Connection connection;
 
-    Call(Connection connection) {
+    public Call() {
+    }
+
+    public Call(Connection connection) {
         Call.connection = connection;
     }
 

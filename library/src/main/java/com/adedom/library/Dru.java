@@ -15,7 +15,9 @@ import java.util.ArrayList;
 /*
     Pathiphon Jaiyen
     6042470006
-    31/10/19
+    02/11/19
+
+    Facebook : AdeDom Jaiyen
 */
 
 public class Dru {
@@ -63,7 +65,7 @@ public class Dru {
         return false;
     }
 
-    public static void recyclerView(Context context, RecyclerView recyclerView, ArrayList<DataItem> items) {
+    public static void recyclerView(Context context, RecyclerView recyclerView, ArrayList<MyDataBean> items) {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(new MyAdapter(items));
     }

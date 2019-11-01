@@ -14,13 +14,13 @@ public class CallCommit {
 
     private static ArrayList<String> values;
 
-    private CallCommit() {
+    public CallCommit() {
     }
 
-    CallCommit(Connection connection, String storedProcedureName) {
-        values = new ArrayList<>();
+    public CallCommit(Connection connection, String storedProcedureName) {
         CallCommit.connection = connection;
         CallCommit.storedProcedureName = storedProcedureName;
+        values = new ArrayList<>();
     }
 
     public void commit() {
@@ -66,18 +66,18 @@ public class CallCommit {
 
     public void commit(ExecuteQuery query) {
         Statement statement = null;
-        ResultSet rs = null;
+        ResultSet resultSet = null;
 
         try {
             statement = connection.createStatement();
-            rs = statement.executeQuery(spFormat(values));
-            query.onComplete(rs);
+            resultSet = statement.executeQuery(spFormat(values));
+            query.onComplete(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                assert rs != null;
-                rs.close();
+                assert resultSet != null;
+                resultSet.close();
                 statement.close();
                 connection.close();
             } catch (SQLException e) {

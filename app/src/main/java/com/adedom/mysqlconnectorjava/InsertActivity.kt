@@ -11,10 +11,7 @@ class InsertActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_insert)
-        setEvents()
-    }
 
-    private fun setEvents() {
         mBtnInsert.setOnClickListener {
             when {
                 Dru.isEmpty(mEdtName, "abc") -> return@setOnClickListener

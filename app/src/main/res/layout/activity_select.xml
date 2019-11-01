@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".SelectActivity">
+        xmlns:tools="http://schemas.android.com/tools"
+        style="@style/LinearLayout"
+        tools:context=".SelectActivity">
 
     <Button
             android:id="@+id/mBtnSelect"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            style="@style/MatchWrap" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/mRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            android:id="@+id/mRecyclerView"
+            style="@style/MatchMatch"
+            tools:listitem="@android:layout/simple_list_item_1" />
 
 </LinearLayout>
