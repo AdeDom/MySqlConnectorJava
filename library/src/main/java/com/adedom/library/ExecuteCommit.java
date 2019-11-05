@@ -11,10 +11,7 @@ public class ExecuteCommit {
 
     private static String sql;
 
-    public ExecuteCommit() {
-    }
-
-    public ExecuteCommit(Connection connection, String sql) {
+    ExecuteCommit(Connection connection, String sql) {
         ExecuteCommit.connection = connection;
         ExecuteCommit.sql = sql;
     }
