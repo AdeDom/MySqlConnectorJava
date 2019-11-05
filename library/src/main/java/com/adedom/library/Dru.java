@@ -25,12 +25,12 @@ public class Dru {
     public Dru() {
     }
 
-    public static Connection connection(String ip, String dbName, String username, String password) {
+    public static Connection connection(String host, String username, String password, String databaseName) {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://" + ip + "/" + dbName + "?useUnicode=true&characterEncoding=utf-8";
+            String url = "jdbc:mysql://" + host + "/" + databaseName + "?useUnicode=true&characterEncoding=utf-8";
             return DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
