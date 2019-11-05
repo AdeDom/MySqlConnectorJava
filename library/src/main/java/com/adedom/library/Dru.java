@@ -2,10 +2,11 @@ package com.adedom.library;
 
 import android.content.Context;
 import android.os.StrictMode;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,9 +22,6 @@ import java.util.ArrayList;
 */
 
 public class Dru {
-
-    public Dru() {
-    }
 
     public static Connection connection(String host, String username, String password, String databaseName) {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());

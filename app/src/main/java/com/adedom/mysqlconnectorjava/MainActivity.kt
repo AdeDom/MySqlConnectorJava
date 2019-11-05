@@ -1,7 +1,7 @@
 package com.adedom.mysqlconnectorjava
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.adedom.library.Dru
 import com.adedom.library.ExecuteQuery
 import com.adedom.library.ExecuteUpdate
@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         fun connection(): Connection {
-            return Dru.connection("192.168.43.22", "root", "abc456", "my_connect_jdbc")
+            return Dru.connection("192.168.42.48", "root", "abc456", "my_connect_jdbc")
         }
     }
 

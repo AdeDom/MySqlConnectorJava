@@ -25,13 +25,13 @@
                 android:text="@string/insert" />
     </LinearLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/mSwipeRefreshLayout"
             style="@style/MatchMatch">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mRecyclerView"
                 style="@style/MatchMatch"
                 tools:listitem="@android:layout/simple_list_item_2" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
