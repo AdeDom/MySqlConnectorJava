@@ -16,18 +16,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     public MyAdapter() {
     }
 
-    public MyAdapter(ArrayList<MyDataBean> items) {
+    MyAdapter(ArrayList<MyDataBean> items) {
         this.items = new ArrayList<>();
         this.items = items;
     }
 
     class MyHolder extends RecyclerView.ViewHolder {
 
-        private final TextView textView;
+        private final TextView textView1;
+        private final TextView textView2;
 
         MyHolder(@NonNull View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            textView1 = (TextView) itemView.findViewById(android.R.id.text1);
+            textView2 = (TextView) itemView.findViewById(android.R.id.text2);
         }
     }
 
@@ -35,13 +37,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(android.R.layout.simple_list_item_1, viewGroup, false);
+                .inflate(android.R.layout.simple_list_item_2, viewGroup, false);
         return new MyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int i) {
-        holder.textView.setText(items.get(i).getTextView());
+        holder.textView1.setText(items.get(i).getTextView1());
+        holder.textView2.setText(items.get(i).getTextView2());
     }
 
     @Override
