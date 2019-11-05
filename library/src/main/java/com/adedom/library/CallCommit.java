@@ -14,10 +14,10 @@ public class CallCommit {
 
     private static ArrayList<String> values;
 
-    public CallCommit() {
+    private CallCommit() {
     }
 
-    public CallCommit(Connection connection, String storedProcedureName) {
+    CallCommit(Connection connection, String storedProcedureName) {
         CallCommit.connection = connection;
         CallCommit.storedProcedureName = storedProcedureName;
         values = new ArrayList<>();
@@ -28,7 +28,7 @@ public class CallCommit {
 
         try {
             statement = connection.createStatement();
-            statement.executeUpdate(spFormat(values));
+            statement.executeUpdate(storedProcedureSyntax(values));
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -47,7 +47,7 @@ public class CallCommit {
 
         try {
             statement = connection.createStatement();
-            int result = statement.executeUpdate(spFormat(values));
+            int result = statement.executeUpdate(storedProcedureSyntax(values));
             if (result == 1) {
                 update.onComplete();
             }
@@ -70,7 +70,7 @@ public class CallCommit {
 
         try {
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(spFormat(values));
+            resultSet = statement.executeQuery(storedProcedureSyntax(values));
             query.onComplete(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,7 +91,7 @@ public class CallCommit {
         return new CallCommit();
     }
 
-    private String spFormat(ArrayList<String> values) {
+    private String storedProcedureSyntax(ArrayList<String> values) {
         String sql = "CALL " + storedProcedureName + "(";
         for (String s : values) sql += s + ",";
         if (!values.isEmpty()) sql = sql.substring(0, sql.length() - 1);
