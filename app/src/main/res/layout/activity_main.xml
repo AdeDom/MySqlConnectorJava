@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        style="@style/LinearLayout"
-        android:gravity="center"
+        style="@style/MatchMatch"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:padding="10dp"
         tools:context=".MainActivity">
 
-    <ImageView style="@style/ImageView" />
+    <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="horizontal">
 
-    <TextView
-            style="@style/WrapWrap"
-            android:gravity="center"
-            android:text="@string/main"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textStyle="bold" />
+        <EditText
+                android:id="@+id/mEdtName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/name" />
 
-    <Button
-            android:id="@+id/mBtnSelect"
-            style="@style/WrapWrap"
-            android:text="@string/select" />
+        <Button
+                android:id="@+id/mBtnInsert"
+                style="@style/WrapWrap"
+                android:text="@string/insert" />
+    </LinearLayout>
 
-    <Button
-            android:id="@+id/mBtnInsert"
-            style="@style/WrapWrap"
-            android:text="@string/insert" />
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/mSwipeRefreshLayout"
+            style="@style/MatchMatch">
 
-    <Button
-            android:id="@+id/mBtnUpdate"
-            style="@style/WrapWrap"
-            android:text="@string/update" />
-
-    <Button
-            android:id="@+id/mBtnDelete"
-            style="@style/WrapWrap"
-            android:text="@string/delete" />
-
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/mRecyclerView"
+                style="@style/MatchMatch"
+                tools:listitem="@android:layout/simple_list_item_2" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
