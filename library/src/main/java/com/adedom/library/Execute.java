@@ -6,10 +6,7 @@ public class Execute {
 
     private static Connection connection;
 
-    public Execute() {
-    }
-
-    public Execute(Connection connection) {
+    Execute(Connection connection) {
         Execute.connection = connection;
     }
 
