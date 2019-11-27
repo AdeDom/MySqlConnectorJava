@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
+public class Adapter extends RecyclerView.Adapter<Adapter.MyHolder> {
 
-    private ArrayList<MyDataBean> items;
+    private ArrayList<Data> items;
 
-    public MyAdapter() {
+    public Adapter() {
     }
 
-    MyAdapter(ArrayList<MyDataBean> items) {
+    Adapter(ArrayList<Data> items) {
         this.items = new ArrayList<>();
         this.items = items;
     }
@@ -53,7 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         return items.size();
     }
 
-    public void refresh(ArrayList<MyDataBean> items) {
+    public void refresh(ArrayList<Data> items) {
         this.items = items;
         notifyDataSetChanged();
     }

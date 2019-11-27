@@ -28,7 +28,7 @@ public class CallCommit {
 
         try {
             statement = connection.createStatement();
-            statement.executeUpdate(storedProcedureSyntax(values));
+            statement.execute(storedProcedureSyntax(values));
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -48,9 +48,7 @@ public class CallCommit {
         try {
             statement = connection.createStatement();
             int result = statement.executeUpdate(storedProcedureSyntax(values));
-            if (result == 1) {
-                update.onComplete();
-            }
+            if (result == 1) update.onComplete();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

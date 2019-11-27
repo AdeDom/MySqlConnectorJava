@@ -21,7 +21,7 @@ public class ExecuteCommit {
 
         try {
             statement = connection.createStatement();
-            statement.executeUpdate(sql);
+            statement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -41,9 +41,7 @@ public class ExecuteCommit {
         try {
             statement = connection.createStatement();
             int result = statement.executeUpdate(sql);
-            if (result == 1) {
-                update.onComplete();
-            }
+            if (result == 1) update.onComplete();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

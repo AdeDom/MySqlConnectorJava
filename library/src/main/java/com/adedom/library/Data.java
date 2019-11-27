@@ -1,14 +1,14 @@
 package com.adedom.library;
 
-public class MyDataBean {
+public class Data {
 
     private String textView1;
     private String textView2;
 
-    public MyDataBean() {
+    public Data() {
     }
 
-    public MyDataBean(String textView1, String textView2) {
+    public Data(String textView1, String textView2) {
         this.textView1 = textView1;
         this.textView2 = textView2;
     }

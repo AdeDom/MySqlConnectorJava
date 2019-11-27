@@ -9,11 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.adedom.library.Data;
 import com.adedom.library.Dru;
 import com.adedom.library.ExecuteQuery;
 import com.adedom.library.ExecuteUpdate;
-import com.adedom.library.MyDataBean;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,6 +26,10 @@ public class Main2Activity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
+    public static Connection connection() {
+        return Dru.connection("192.168.43.22", "root", "abc456", "mydev");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +40,7 @@ public class Main2Activity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecyclerView);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.mSwipeRefreshLayout);
 
-        MainActivity.Companion.connection();
+        Main2Activity.connection();
         Dru.completed(getBaseContext());
 
         feedData();
@@ -43,8 +48,7 @@ public class Main2Activity extends AppCompatActivity {
         mBtnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = mEdtName.getText().toString().trim();
-                insert(name);
+                insert();
             }
         });
 
@@ -63,18 +67,16 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void feedData() {
-        String sql = "SELECT product.product_id,product.name,category.name \n" +
-                "FROM product, category\n" +
-                "WHERE product.category_id = category.category_id";
-        Dru.connection(MainActivity.Companion.connection())
+        String sql = "SELECT * FROM product";
+        Dru.connection(Main2Activity.connection())
                 .execute(sql)
                 .commit(new ExecuteQuery() {
                     @Override
                     public void onComplete(ResultSet resultSet) {
                         try {
-                            ArrayList<MyDataBean> items = new ArrayList<>();
+                            ArrayList<Data> items = new ArrayList<>();
                             while (resultSet.next()) {
-                                items.add(new MyDataBean(
+                                items.add(new Data(
                                         resultSet.getString(3),
                                         resultSet.getString(2)
                                 ));
@@ -88,9 +90,10 @@ public class Main2Activity extends AppCompatActivity {
                 });
     }
 
-    private void insert(String name) {
-        String sql = "INSERT INTO product(name, category_id) VALUES ('" + name + "','1')";
-        Dru.connection(MainActivity.Companion.connection())
+    private void insert() {
+        String name = mEdtName.getText().toString().trim();
+        String sql = "INSERT INTO `product`(`name`, `price`) VALUES ('" + name + "','1')";
+        Dru.connection(Main2Activity.connection())
                 .execute(sql)
                 .commit(new ExecuteUpdate() {
                     @Override

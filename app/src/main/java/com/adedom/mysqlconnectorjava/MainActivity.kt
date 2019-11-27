@@ -2,19 +2,18 @@ package com.adedom.mysqlconnectorjava
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.adedom.library.Data
 import com.adedom.library.Dru
 import com.adedom.library.ExecuteQuery
 import com.adedom.library.ExecuteUpdate
-import com.adedom.library.MyDataBean
 import kotlinx.android.synthetic.main.activity_main.*
 import java.sql.Connection
 
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        fun connection(): Connection {
-            return Dru.connection("192.168.42.48", "root", "abc456", "my_connect_jdbc")
-        }
+        fun connection(): Connection =
+            Dru.connection("192.168.43.22", "root", "abc456", "mydev")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,13 +40,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun feedData() {
-        Dru.with(connection())
+        Dru.with(MainActivity.connection())
             .call("sp_select_product")
             .commit(ExecuteQuery {
-                val items = arrayListOf<MyDataBean>()
+                val items = arrayListOf<Data>()
                 while (it.next()) {
                     items.add(
-                        MyDataBean(
+                        Data(
                             it.getString(3),
                             it.getString(2)
                         )
@@ -59,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun insert() {
-        Dru.with(connection())
+        Dru.with(MainActivity.connection())
             .call("sp_insert_product")
             .parameter(mEdtName.text.toString().trim())
             .commit(ExecuteUpdate {
