@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /*
     Pathiphon Jaiyen
     6042470006
-    27/11/19
+    28/01/20
 
     Facebook : AdeDom Jaiyen
 */
@@ -28,8 +28,8 @@ public class Dru {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://" + host + "/" + databaseName + "?useUnicode=true&characterEncoding=utf-8";
-            return DriverManager.getConnection(url, username, password);
+            String url = "jdbc:mysql://" + host.trim() + "/" + databaseName.trim() + "?useUnicode=true&characterEncoding=utf-8";
+            return DriverManager.getConnection(url, username.trim(), password.trim());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
