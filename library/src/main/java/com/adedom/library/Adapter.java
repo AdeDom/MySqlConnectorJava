@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyHolder> {
 
@@ -53,8 +54,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyHolder> {
         return items.size();
     }
 
-    public void refresh(ArrayList<Data> items) {
-        this.items = items;
+    public void setList(List<Data> items) {
+        this.items = (ArrayList<Data>) items;
         notifyDataSetChanged();
     }
 }
