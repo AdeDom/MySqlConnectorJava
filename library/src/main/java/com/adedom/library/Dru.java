@@ -1,17 +1,29 @@
 package com.adedom.library;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.StrictMode;
+import android.util.Base64;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
+
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /*
     Pathiphon Jaiyen
@@ -72,5 +84,52 @@ public class Dru {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+    }
+
+    public static String getImageNameJpg() {
+        return UUID.randomUUID().toString().replace("-", "") + ".jpg";
+    }
+
+    private static String getImageToString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imgByte = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgByte, Base64.DEFAULT);
+    }
+
+    public static void selectImage(Activity activity, int code) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        activity.startActivityForResult(intent, code);
+    }
+
+    public static void uploadImage(String baseUrl, String name, Bitmap bitmap) {
+        String image = getImageToString(bitmap);
+        ApiInterface apiInterface = ApiClient.getRetrofit(baseUrl).create(ApiInterface.class);
+        retrofit2.Call<ImageClass> call = apiInterface.uploadImage(name, image);
+        call.enqueue(new Callback<ImageClass>() {
+            @Override
+            public void onResponse(retrofit2.Call<ImageClass> call, Response<ImageClass> response) {
+                ImageClass imageClass = response.body();
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<ImageClass> call, Throwable t) {
+            }
+        });
+    }
+
+    public static void loadImageCircle(ImageView imageView, String url) {
+        Glide.with(imageView)
+                .load(url)
+                .circleCrop()
+                .into(imageView);
+    }
+
+    public static void loadImage(ImageView imageView, String url) {
+        Glide.with(imageView)
+                .load(url)
+                .into(imageView);
     }
 }
