@@ -19,7 +19,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,16 +84,16 @@ public class Dru {
         if (bitmap == null) return;
         String imageFile = getImageToString(bitmap);
         ApiService apiService = ApiClient.getRetrofit(baseUrl).create(ApiService.class);
-        Call<ResponseBody> call = apiService.uploadImage(imageName, imageFile);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<UploadImageResponse> call = apiService.uploadImage(imageName, imageFile);
+        call.enqueue(new Callback<UploadImageResponse>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
                 if (!response.isSuccessful()) return;
                 listener.onUploadImageSuccess(response.body());
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
             }
         });
     }

@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             val baseUrl = "http://192.168.43.22/ics/images/"
             val imageName = UUID.randomUUID().toString().replace("-", "") + ".jpg"
             Dru.uploadImage(baseContext, baseUrl, imageName, data.data) {
-                Toast.makeText(baseContext, "Upload success", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, it.response, Toast.LENGTH_SHORT).show()
             }
         }
     }
