@@ -6,12 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.StrictMode;
 import android.util.Base64;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -19,8 +15,6 @@ import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.UUID;
 
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +22,7 @@ import retrofit2.Response;
 /*
     Pathiphon Jaiyen
     6042470006
-    28/01/20
+    04/07/20
 
     Facebook : AdeDom Jaiyen
 */
@@ -54,40 +48,12 @@ public class Dru {
         return new Execute(connection);
     }
 
-    public static Call with(Connection connection) {
-        return new Call(connection);
-    }
-
     public static void completed(Context context) {
         Toast.makeText(context, R.string.completed, Toast.LENGTH_SHORT).show();
     }
 
     public static void failed(Context context) {
         Toast.makeText(context, R.string.failed, Toast.LENGTH_LONG).show();
-    }
-
-    public static Boolean isEmpty(EditText editText, String error) {
-        if (editText.getText().toString().trim().isEmpty()) {
-            editText.requestFocus();
-            editText.setError(error);
-            return true;
-        }
-        return false;
-    }
-
-    public static void recyclerView(Context context, RecyclerView recyclerView, ArrayList<Data> items) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(new Adapter(items));
-    }
-
-    public static void recyclerView(Context context, RecyclerView recyclerView, RecyclerView.Adapter adapter) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
-    }
-
-    public static String getImageNameJpg() {
-        return UUID.randomUUID().toString().replace("-", "") + ".jpg";
     }
 
     private static String getImageToString(Bitmap bitmap) {
