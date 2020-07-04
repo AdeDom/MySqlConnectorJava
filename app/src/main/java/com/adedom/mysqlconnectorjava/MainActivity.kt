@@ -1,12 +1,16 @@
 package com.adedom.mysqlconnectorjava
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.adedom.library.Dru
 import com.adedom.library.ExecuteQuery
 import com.adedom.library.ExecuteUpdate
 import kotlinx.android.synthetic.main.activity_main.*
 import java.sql.Connection
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,11 +27,26 @@ class MainActivity : AppCompatActivity() {
         bt_insert.setOnClickListener {
             insert()
         }
+
+        bt_upload_image.setOnClickListener {
+            Dru.selectImage(this, 1234)
+        }
     }
 
     override fun onResume() {
         super.onResume()
         fetchProduct()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1234 && resultCode == Activity.RESULT_OK && data != null) {
+            val baseUrl = "http://192.168.43.22/ics/images/"
+            val imageName = UUID.randomUUID().toString().replace("-", "") + ".jpg"
+            Dru.uploadImage(baseContext, baseUrl, imageName, data.data) {
+                Toast.makeText(baseContext, "Upload success", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun fetchProduct() {

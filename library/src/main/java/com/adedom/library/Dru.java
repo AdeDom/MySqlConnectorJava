@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -12,10 +14,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
@@ -70,18 +75,26 @@ public class Dru {
         activity.startActivityForResult(intent, code);
     }
 
-    public static void uploadImage(String baseUrl, String name, Bitmap bitmap) {
-        String image = getImageToString(bitmap);
-        ApiInterface apiInterface = ApiClient.getRetrofit(baseUrl).create(ApiInterface.class);
-        retrofit2.Call<ImageClass> call = apiInterface.uploadImage(name, image);
-        call.enqueue(new Callback<ImageClass>() {
+    public static void uploadImage(Context context, String baseUrl, String imageName, Uri uri, final UploadImageListener listener) {
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (bitmap == null) return;
+        String imageFile = getImageToString(bitmap);
+        ApiService apiService = ApiClient.getRetrofit(baseUrl).create(ApiService.class);
+        Call<ResponseBody> call = apiService.uploadImage(imageName, imageFile);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(retrofit2.Call<ImageClass> call, Response<ImageClass> response) {
-                ImageClass imageClass = response.body();
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (!response.isSuccessful()) return;
+                listener.onUploadImageSuccess(response.body());
             }
 
             @Override
-            public void onFailure(retrofit2.Call<ImageClass> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
             }
         });
     }
